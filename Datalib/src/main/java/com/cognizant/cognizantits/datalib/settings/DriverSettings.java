@@ -17,6 +17,12 @@ package com.cognizant.cognizantits.datalib.settings;
 
 public class DriverSettings extends AbstractPropSettings {
 
+    private static String geckoDriverPath, chromeDriverPath;
+
+    static {
+        setDriverPath();
+    }
+
     public DriverSettings(String location) {
         super(location, "DriverSettings");
         if (isEmpty()) {
@@ -30,6 +36,17 @@ public class DriverSettings extends AbstractPropSettings {
         setChromeDriverPath(getChromeDriverPath());
         setIEDriverPath(getIEDriverPath());
         setEdgeDriverPath(getEdgeDriverPath());
+    }
+
+    private static void setDriverPath() {
+        if (System.getProperty("os.name", "")
+                .toLowerCase().contains("win")) {
+            geckoDriverPath = "./lib/Drivers/geckodriver.exe";
+            chromeDriverPath = "./lib/Drivers/chromedriver.exe";
+        } else {
+            geckoDriverPath = "./lib/Drivers/geckodriver";
+            chromeDriverPath = "./lib/Drivers/chromedriver";
+        }
     }
 
     public void setFirefoxBinaryPath(String path) {
@@ -57,11 +74,11 @@ public class DriverSettings extends AbstractPropSettings {
     }
 
     public String getGeckcoDriverPath() {
-        return getProperty("GeckoDriverPath", "./lib/Drivers/geckodriver.exe");
+        return getProperty("GeckoDriverPath", geckoDriverPath);
     }
 
     public String getChromeDriverPath() {
-        return getProperty("ChromeDriverPath", "./lib/Drivers/chromedriver.exe");
+        return getProperty("ChromeDriverPath", chromeDriverPath);
     }
 
     public String getIEDriverPath() {
