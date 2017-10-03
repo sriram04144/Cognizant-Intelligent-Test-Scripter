@@ -18,7 +18,8 @@ script: "mvn clean install"
 
 before_deploy:
   - export RELEASE_FILE=$(ls Dist/target/cognizant-intelligent-test-scripter-*.zip)
-  
+
+#check commit
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
